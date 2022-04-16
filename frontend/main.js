@@ -1,4 +1,4 @@
-import  {startGame, createGamer, asegurarPlayers, createStartButton,displayPlayers, displayFullTableCards, updateCardInGame, updateDeskCard, displayFirstTurn, updateTurn  } from './node_modules/prueba_cards/uno.js'
+import * as uno from "uno";
 
 let turn = 0;
 const mainElement = document.querySelector("main");
@@ -7,20 +7,20 @@ const mainElement = document.querySelector("main");
 const formNumPlayers = document.querySelector("form");
 formNumPlayers.addEventListener("submit", (event) => {
   event.preventDefault();
-  let numPlayers = asegurarPlayers(); //arreglar que si no poses res no et deixi avançar
+  let numPlayers = uno.asegurarPlayers(); //arreglar que si no poses res no et deixi avançar
 
   let gamers = [];
   //form: Nombre de jugadores
   const formPlayer = document.querySelector("form");
   formPlayer.addEventListener("submit", (event) => {
     event.preventDefault();
-    gamers = createGamer(gamers); //arreglar que si no poses res no doni error
-    displayPlayers(gamers, turn); //mostrar el nombre de los gamers en pantalla
+    gamers = uno.createGamer(gamers); //arreglar que si no poses res no doni error
+    uno.displayPlayers(gamers, turn); //mostrar el nombre de los gamers en pantalla
 
     if (gamers.length != numPlayers) {
       console.log(">> Waiting for players...");
     } else {
-      let startButton = createStartButton(); //create the button: start game
+      let startButton = uno.createStartButton(); //create the button: start game
       mainElement.appendChild(startButton); //afegir el button:start game
       formPlayer.remove(); //eliminar el form para no añadir más jugadores
       //button: Start Game
@@ -28,29 +28,26 @@ formNumPlayers.addEventListener("submit", (event) => {
         event.preventDefault();
         startButton.remove(); //eliminar el boton: start game!
 
-        let t = startGame(gamers); //poner los datos para empezar el juego
-        displayPlayers(t.gamers, turn); //mostrar las cartas de todos los jugadores
-        displayFullTableCards(
-          t.cardsInGame,
-          "Card in game:",
-          t.table,
-          "Deck of cards to take:"
-        ); //mostrar la carta en juego
+        let t = uno.startGame(gamers); //poner los datos para empezar el juego
+        uno.displayPlayers(t.gamers, turn); //mostrar las cartas de todos los jugadores
+        uno.displayFullTableCards(t.cardsInGame, "Card in game:", t.table, "Deck of cards to take:"); //mostrar la carta en juego
         console.log(">> The initial table is:");
         console.log(t);
 
         //button: turnButton
-        let turnButton = displayFirstTurn(t); //dar el turno al primer gamer
+        let turnButton = uno.displayFirstTurn(t); //dar el turno al primer gamer
         turnButton.addEventListener("click", (event) => {
-          displayPlayers(t.gamers, turn);
+          uno.displayPlayers(t.gamers, turn);
 
           //card: comprovar si la ultima carta que hay en CardsInGame (la que acaban de tirar) es especial (+4, +2, forbbiden, direction)
-          if(t.cardsInGame[t.cardsInGameLength()-1].cardName.includes("multicolor") || 
-          t.cardsInGame[t.cardsInGameLength()-1].cardName.includes("+4") ||
-          t.cardsInGame[t.cardsInGameLength()-1].cardName.includes("+2") ||
-          t.cardsInGame[t.cardsInGameLength()-1].cardName.includes("Forbbiden") ||
-          t.cardsInGame[t.cardsInGameLength()-1].cardName.includes("Direction")){
-            console.log("Han tirat una carta especial!!!!!!!!!!!"); //fer casos especials per cada carta 
+          if (
+            t.cardsInGame[t.cardsInGameLength() - 1].cardName.includes("multicolor") ||
+            t.cardsInGame[t.cardsInGameLength() - 1].cardName.includes("+4") ||
+            t.cardsInGame[t.cardsInGameLength() - 1].cardName.includes("+2") ||
+            t.cardsInGame[t.cardsInGameLength() - 1].cardName.includes("Forbbiden") ||
+            t.cardsInGame[t.cardsInGameLength() - 1].cardName.includes("Direction")
+          ) {
+            console.log("Han tirat una carta especial!!!!!!!!!!!"); //fer casos especials per cada carta
           }
 
           //card: detectar si el jugador quiere tirar una carta
@@ -81,7 +78,7 @@ function touchCard(t, cardImages, i) {
 
       //actualizar las cartas de cardsInGame(monton de cartas en jugada)
       let cardPreGame = document.getElementById("cardsInGame").querySelector("img");
-      updateCardInGame(cardPreGame, cardImages[i]);
+      uno.updateCardInGame(cardPreGame, cardImages[i]);
 
       //comprovar si hay un ganador
       let ganador = t.score();
@@ -94,7 +91,7 @@ function touchCard(t, cardImages, i) {
         }
         console.log(t);
       } else {
-        turn = updateTurn(t, turn, t.gamers.length); //actualizamos para que le toque al siguiente cuando ha tirado el anterior
+        turn = uno.updateTurn(t, turn, t.gamers.length); //actualizamos para que le toque al siguiente cuando ha tirado el anterior
         //console.log(t);
       }
     }

@@ -101,7 +101,7 @@ class Table {
     //añadimos 2 multicolor, 2 plus4
     for (let special in specials) {
       //for (let i = 0; i < 1; i++) {
-        this.table.push(new Card(specials[special]));
+      this.table.push(new Card(specials[special]));
       //}
     }
     this.table.sort(function () {
@@ -430,5 +430,16 @@ function showUnoButton(turn, gamers) {
   }
 }
 
-export {startGame, createGamer, asegurarPlayers, createStartButton,displayPlayers, displayFullTableCards, updateCardInGame, updateDeskCard, displayFirstTurn, updateTurn  };
+export {
+  startGame,
+  createGamer, 
+  asegurarPlayers, 
+  createStartButton, 
+  displayPlayers, 
+  displayFullTableCards, 
+  updateCardInGame, 
+  updateDeskCard, 
+  displayFirstTurn, 
+  updateTurn,
+};
 

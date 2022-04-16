@@ -1,13 +1,13 @@
 {
   "name": "uno",
   "version": "1.0.0",
-  "description": "",
+  "description": "A library implementing Uno's Card Game model",
+  "type":"module",
   "main": "uno.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type":"module"
+  "keywords": ["cards", "uno"],
+  "author": "Laia Guirado",
+  "license": "ISC"
 }
